@@ -1,0 +1,93 @@
+@charset "utf-8";
+///
+/// Button
+///
+
+.ai-b {
+  display: flex; align-items: center; justify-content: center;
+  height: 2.5em;
+  margin: 0;
+  padding: $bt-padding-y $bt-padding-x;
+  border: none; border-radius: 0;
+  outline: none;
+
+  background: $bt-bg-color;
+  color: color-text-contrast($bt-bg-color);
+
+  font-size: 1em; font-weight: $bt-font-weight;
+  line-height: 1.25;
+
+  transition: $transition;
+  cursor: pointer;
+  
+  user-select: none; -ms-user-select: none; -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  &:hover {
+    background: darken($bt-bg-color, 8);
+    color: color-text-contrast(darken($bt-bg-color, 8));
+  }
+  &:active {
+    background-color: darken($bt-bg-color, 15);
+    color: color-text-contrast(darken($bt-bg-color, 15));
+  }
+}
+.ai-b:not(:last-child) { margin-right: 0.5rem; }
+
+.ai-b {
+  @include responsive-content() using($affix) {
+    // Size
+    &.size-xs#{$affix} { font-size: $rem-xs; }
+    &.size-s#{$affix} { font-size: $rem-s; }
+    &.size-m#{$affix} { font-size: $rem-m; }
+    &.size-l#{$affix} { font-size: $rem-l; }
+    &.size-xl#{$affix} { font-size: $rem-xl; }
+    
+    &.full#{$affix} { width: 100%; flex: 1; }
+    
+    &.angular#{$affix} { border-radius: 0; }
+    &.round#{$affix} { border-radius: $border-radius; }
+  
+    // Color
+    @each $key, $c in $colors {
+      &.#{$key}#{$affix} {
+        background-color: $c;
+        color: color-text-contrast($c);
+      
+        @if (is-bright($c)) {
+          &:hover {
+            background-color: lighten($c, 8);
+            color: color-text-contrast(lighten($c, 8));
+          }
+          &:active {
+            background-color: lighten($c, 15);
+            color: color-text-contrast(lighten($c, 15));
+          }
+        } @else {
+          &:hover {
+            background-color: darken($c, 8);
+            color: color-text-contrast(darken($c, 8));
+          }
+          &:active {
+            background-color: darken($c, 15);
+            color: color-text-contrast(darken($c, 15));
+          }
+        }
+      }
+    }
+  }
+}
+
+.ai-b.icon {
+  //display: inline-block;
+  padding: 0.5em;
+
+  .wrap {
+    display: flex; align-items: center;
+    height: 100%;
+  }
+
+  i {
+    display: inline-block;
+  }
+}

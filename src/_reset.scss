@@ -1,0 +1,29 @@
+@charset "utf-8";
+///
+/// Reset
+///
+
+///******************************************************
+///   ■ Normalize.css
+///******************************************************
+
+// 추후에 삽입.
+
+///******************************************************
+///   ■ Normalize.css
+///******************************************************
+
+html {
+  box-sizing: border-box;
+  -ms-overflow-style: scrollbar;
+  font-family: "NotoSans", "맑은 고딕", sans-serif;
+  font-size: $base-size-px;
+  scroll-behavior: smooth;
+}
+*, *::before, *::after { box-sizing: inherit; }
+
+div { border-width: 0; }
+
+a {
+  -webkit-tap-highlight-color: transparent;
+}

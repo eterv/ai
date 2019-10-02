@@ -1,0 +1,113 @@
+@charset "utf-8";
+///
+/// Functions & Mixins - Base
+///
+
+///
+/// 폰트를 정의한다.
+///
+@mixin font-face($name, $weight, $file, $types: ('woff')) {
+  $exts: ( woff: woff, woff2: woff2, truetype: ttf, opentype: otf );
+  $src: ();
+  @each $type in $types {
+    $ext: map-get($exts, $type);
+    $src: append($src, url("../font/" + $file + "." + $ext) format(quote($type)), comma);
+  }
+  
+  @font-face {
+    font-family: $name; font-weight: $weight;
+    src: $src;
+  }
+}
+
+@mixin number-string($lists: (4, 8), $multiplier: 1) {
+  $first: false;
+  @each $n in $lists {
+    @for $i from 0 through ($n * $multiplier) {
+      $str: if($i % $n > 0, #{$i}\/#{$n}, $i / $n);
+      
+      @if (not $first or $i % $n > 0) {
+        $content-datas: (str: $str, num: $i / $n);
+        @content($content-datas);
+      }
+    }
+    $first: true;
+  }
+}
+
+@function sqrt($r) {
+  $x0: 1;
+  $x1: $x0;
+  @for $i from 1 through 10 {
+    $x1: $x0 - ($x0 * $x0 - abs($r)) / (2 * $x0);
+    $x0: $x1;
+  }
+  @return $x1;
+}
+
+
+///
+/// Convert
+///
+@function convert($value, $convertUnit, $convertBase: $base-size) {
+  $currentUnit: unit($value);
+  $strippedValue: $value / ($value * 0 + 1);
+  @if not unitless($convertBase) {
+    @if unit($convertBase) != px {
+      @error "Not supported unit '#{unit($convertBase)}' as convert base!";
+    }
+    $convertBase: $convertBase / ($convertBase * 0 + 1);
+  }
+
+  @if $currentUnit == px {
+    @if $convertUnit == 'em' {
+      @return 0em + ($strippedValue / $convertBase);
+    }
+    @else if $convertUnit == 'rem' {
+      @return 0rem + ($strippedValue / $convertBase);
+    }
+    @else if $convertUnit == '%' {
+      @return percentage($strippedValue / $convertBase);
+    }
+  }
+  @else if $currentUnit == em or $currentUnit == rem {
+    @if $convertUnit == 'px' {
+      @return 0px + ($strippedValue * $convertBase);
+    }
+    @else if $convertUnit == '%' {
+      @return percentage($strippedValue);
+    }
+  }
+  @else if $currentUnit == '%' {
+    @if $convertUnit == 'px' {
+      @return 0em + ($strippedValue * $convertBase / 100);
+    }
+    @else if $convertUnit == 'em' {
+      @return 0em + ($strippedValue / 100);
+    }
+    @else if $convertUnit == 'rem' {
+      @return 0rem + ($strippedValue / 100);
+    }
+  }
+  // TODO: Check for pt unit convert
+  @else if $currentUnit == pt {
+    @if $convertUnit == 'px' {
+      @return 0px + ($strippedValue * 1.3333);
+    }
+    @else if $convertUnit == 'em' {
+      @return 0em + ($strippedValue / 12);
+    }
+    @else if $convertUnit == 'rem' {
+      @return 0rem + ($strippedValue / 12);
+    }
+    @else if $convertUnit == '%' {
+      @return percentage($strippedValue / 12)
+    }
+  }
+  @error "Can't convert '#{$value}' to unit '#{$convertUnit}'!";
+}
+
+@function em($value) { @return convert($value, 'em'); }
+@function rem($value) { @return convert($value, 'rem'); }
+@function pt($value) { @return convert($value, 'pt'); }
+@function px($value) { @return convert($value, 'px'); }

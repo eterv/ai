@@ -1,0 +1,96 @@
+@charset "utf-8";
+///
+/// Transition
+///
+
+.transition {
+  animation-duration: $transition-duration;
+  animation-timing-function: ease;
+}
+
+///******************************************************
+///   ■ Fade
+///******************************************************
+
+.transition {
+  @each $dir in ('in', 'out') {
+    &.fade.#{$dir} { animation-name: fade-#{$dir}; }
+    &.fade-down.#{$dir} { animation-name: fadeDown-#{$dir}; }
+    &.fade-up.#{$dir} { animation-name: fadeUp-#{$dir}; }
+    &.fade-left.#{$dir} { animation-name: fadeLeft-#{$dir}; }
+    &.fade-right.#{$dir} { animation-name: fadeRight-#{$dir}; }
+  }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes fadeDown-in {
+  0% { opacity: 0; transform: translateY(-10%); }
+  100% { opacity: 1; transform: translateY(0%); }
+}
+@keyframes fadeUp-in {
+  0% { opacity: 0; transform: translateY(10%); }
+  100% { opacity: 1; transform: translateY(0%); }
+}
+@keyframes fadeLeft-in {
+  0% { opacity: 0; transform: translateX(10%); }
+  100% { opacity: 1; transform: translateX(0%); }
+}
+@keyframes fadeRight-in {
+  0% { opacity: 0; transform: translateX(-10%); }
+  100% { opacity: 1; transform: translateX(0%); }
+}
+
+@keyframes fade-out {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes fadeDown-out {
+  0% { opacity: 1; transform: translateY(0%); }
+  100% { opacity: 0; transform: translateY(-5%); }
+}
+@keyframes fadeUp-out {
+  0% { opacity: 1; transform: translateY(0%); }
+  100% { opacity: 0; transform: translateY(5%); }
+}
+@keyframes fadeLeft-out {
+  0% { opacity: 1; transform: translateX(0%); }
+  100% { opacity: 0; transform: translateX(5%); }
+}
+@keyframes fadeRight-out {
+  0% { opacity: 1; transform: translateX(0%); }
+  100% { opacity: 0; transform: translateX(-5%); }
+}
+
+///******************************************************
+///   ■ Slide
+///******************************************************
+
+.transition {
+  @each $dir in ('in', 'out') {
+    &.slide.#{$dir},
+    &.slide-down.#{$dir} { animation-name: slideY-#{$dir}; transform-origin: center top; }
+    &.slide-up.#{$dir} { animation-name: slideY-#{$dir}; transform-origin: center bottom; }
+    &.slide-left.#{$dir} { animation-name: slideX-#{$dir}; transform-origin: right center; }
+    &.slide-right.#{$dir} { animation-name: slideX-#{$dir}; transform-origin: left center; }
+  }
+}
+
+@keyframes slideY-in {
+  0% { opacity: 0; transform: scaleY(0); }
+  100% { opacity: 1; transform: scaleY(1); }
+}
+@keyframes slideX-in {
+  0% { opacity: 0; transform: scaleX(0); }
+  100% { opacity: 1; transform: scaleX(1); }
+}
+@keyframes slideY-out {
+  0% { opacity: 1; transform: scaleY(1); }
+  100% { opacity: 0; transform: scaleY(0); }
+}
+@keyframes slideX-out {
+  0% { opacity: 1; transform: scaleX(1); }
+  100% { opacity: 0; transform: scaleX(0); }
+}

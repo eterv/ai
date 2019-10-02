@@ -1,0 +1,133 @@
+@charset "utf-8";
+///
+/// Color
+///
+
+$transparent: transparent;
+
+// Gray Scale
+$white:       #ffffff !default; // 100
+$white2:      #f7f7f7 !default; // 97
+$white3:      #eeeeee !default; // 93
+$gray-l3:     #dddddd !default; // 86
+$gray-l2:     #cacaca !default; // 79
+$gray-l1:     #acacac !default; // 67
+$gray:        #808080 !default; // 50
+$gray-d1:     #666666 !default; // 40
+$gray-d2:     #4b4d4f !default; // 30
+$black3:      #333333 !default; // 20
+$black2:      #272727 !default; // 15
+$black:       #1b1b1b !default; // 10
+
+// Color
+$red:         #db2828 !default;
+$orange:      #f2711c !default;
+$yellow:      #fbbd08 !default;
+$olive:       #b5cc18 !default;
+$green:       #21ba45 !default;
+$teal:        #00b5ad !default;
+$blue:        #2185d0 !default;
+$violet:      #6435c9 !default;
+$purple:      #a333c8 !default;
+$pink:        #e03997 !default;
+$brown:       #a5673f !default;
+
+$red-l:   #ff695e !default;
+$orange-l: #ff851b !default;
+$yellow-l: #ffe21f !default;
+$olive-l: #d9e778 !default;
+$green-l: #2ecc40 !default;
+$teal-l:  #6dffff !default;
+$blue-l:  #54c8ff !default;
+$violet-l: #a291fb !default;
+$purple-l: #dc73ff !default;
+$pink-l:  #ff8edf !default;
+$brown-l: #d67c1c !default;
+
+// Theme Color
+$primary-color:     $blue !default;
+$secondary-color:   $gray-d2 !default;
+
+$success-color:     $green !default;
+$info-color:        #31ccec !default;
+$warning-color:     #f2c037 !default;
+$danger-color:      $red !default;
+
+$blend-base-color:  #cccccc !default;
+
+//----- Base Colors -----//
+$colors: (
+	'transparent': $transparent,
+
+  'white': $white,
+  'white2': $white2,
+  'white3': $white3,
+  'gray-l3': $gray-l3,
+  'gray-l2': $gray-l3,
+  'gray-l1': $gray-l3,
+  'gray': $gray,
+  'gray-d1': $gray-d1,
+  'gray-d2': $gray-d2,
+  'black3': $black3,
+  'black2': $black2,
+  'black': $black,
+  
+  'red': $red,
+  'orange': $orange,
+  'yellow': $yellow,
+  'olive': $olive,
+  'green': $green,
+  'teal': $teal,
+  'blue': $blue,
+  'violet': $violet,
+  'purple': $purple,
+  'pink': $pink,
+  'brown': $brown,
+  
+  'red-l': $red-l,
+  'orange-l': $orange-l,
+  'yellow-l': $yellow-l,
+  'olive-l': $olive-l,
+  'green-l': $green-l,
+  'teal-l': $teal-l,
+  'blue-l': $blue-l,
+  'violet-l': $violet-l,
+  'purple-l': $purple-l,
+  'pink-l': $pink-l,
+  'brown-l': $brown-l,
+  
+  'primary': $primary-color,
+  'secondary': $secondary-color,
+  
+  'success': $success-color,
+  'info': $info-color,
+  'warning': $warning-color,
+  'danger': $danger-color
+) !default;
+
+//----- Special Colors -----//
+$special-colors-bg: (
+	'success': #fcfff5,
+	'info': #f8ffff,
+	'warning': #fffaf3,
+	'danger': #fff6f6
+) !default;
+$special-colors-border: (
+	'success': #a3c293,
+	'info': #a9d5de,
+	'warning': #c9ba9b,
+	'danger': #e0b4b4,
+) !default;
+$special-colors-text: (
+  'success': #2c662d,
+  'info': #276f86,
+  'warning': #573a08,
+  'danger': #9f3a38
+) !default;
+
+$hovered-text-color: rgba(0, 0, 0, 0.8) !default;
+$disabled-text-color: rgba(0, 0, 0, 0.2) !default;
+
+///******************************************************
+///   ■ Color Map
+///******************************************************

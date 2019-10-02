@@ -1,0 +1,119 @@
+@charset "utf-8";
+///
+/// Variables
+///
+
+// 글꼴
+$font-name: 'NotoSans' !default;
+
+$page-font: $font-name, 'Helvetica Neue', Arial, Helvetica, sans-serif !default;
+
+$normal: normal !default;
+$bold: 500 !default;
+
+// 기본 크기 및 글자 크기 (가능하다면 16 을 변경하지 마세요.)
+$base-size: 16 !default;
+$base-size-px: 0px + $base-size !default;
+
+// 컬러
+$bg-color: $white;
+$text-color: $black;
+
+$text-dark-color: $text-color;
+$text-light-color: $white;
+
+$disabled-text-color: rgba(0, 0, 0, 0.2);
+$hovered-text-color: rgba(0, 0, 0, 0.8);
+$pressed-text-color: rgba(0, 0, 0, 0.9);
+
+$inverted-text-color: rgba(255, 255, 255, 0.9);
+
+// 보더
+$border-color: rgba(0, 0, 0, 0.2);
+$border-width: 1px;
+$border-radius: rem(4px);
+
+///******************************************************
+///   ■ Size
+///******************************************************
+
+$size-xs: 0.75;
+$size-s: 0.875;
+$size-m: 1;
+$size-l: 1.2;
+$size-xl: 1.4;
+
+// This rounds @size values to the closest pixel then expresses that value in (r)em.
+// This ensures all size values round to exact pixels
+
+// rem - absolute
+$rem-xs: rem(round($size-xs * $base-size-px));
+$rem-s: rem(round($size-s * $base-size-px));
+$rem-m: rem(round($size-m * $base-size-px));
+$rem-l: rem(round($size-l * $base-size-px));
+$rem-xl: rem(round($size-xl * $base-size-px));;
+
+// em - relative
+$em-xs: em(round($size-xs * $base-size-px));
+$em-s: em(round($size-s * $base-size-px));
+$em-m: em(round($size-m * $base-size-px));
+$em-l: em(round($size-l * $base-size-px));
+$em-xl: em(round($size-xl * $base-size-px));
+
+$glyph-width: 1.1em;
+
+///******************************************************
+///   ■ Transitions
+///******************************************************
+
+$transition-duration: 300ms;
+$transition-easing: ease;
+$transition: all $transition-duration $transition-easing;
+
+///******************************************************
+///   ■ Grid
+///******************************************************
+
+$grid-gap: 1.5rem !default;
+$grid-gap-half: $grid-gap / 2 !default;
+$grid-gap-form: (0.75rem, 1rem) !default;
+$c-side-margin: 15px !default;
+
+// 기본 브레이크포인트
+// 유틸리티 클래스에서 끝에 콜론(:) 후에 브레이크포인트 사용
+$breakpoints: (
+  xs: 0,
+  s: 480px,
+  m: 768px,
+  l: 1024px,
+  xl: 1280px
+) !default;
+
+// small / big 을 구분짓는 핵심 미디어 브레이크포인트
+// 유틸리티 클래스에서 끝에 더블 콜론(::) 후에 small / big
+$key-breakpoint: map-get($breakpoints, m) !default;
+
+///******************************************************
+///   ■ Form
+///******************************************************
+
+$input-padding-x: 0.75em;
+$input-padding-y: 0.5em;
+
+$input-focus-border-color: #85b7d9;
+$input-placeholder-color: $gray-l2;
+
+$icon-width: ($input-padding-x * 2) + $glyph-width;
+
+// Checkbox
+$cb-size: rem(20px);
+
+///******************************************************
+///   ■ Button
+///******************************************************
+
+$bt-padding-x: 1.5em;
+$bt-padding-y: $input-padding-y;
+
+$bt-bg-color: #e0e1e2;
+$bt-font-weight: 300;

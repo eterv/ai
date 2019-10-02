@@ -1,0 +1,339 @@
+@charset "utf-8";
+///
+/// Grid Framework
+///   (Box & Sizing & Spacing)
+///
+
+///******************************************************
+///   ■ Container
+///******************************************************
+
+.ai-c {
+  margin: 0 auto;
+  padding-left: $c-side-margin; padding-right: $c-side-margin;
+  
+  .ai-c { padding-left: 0; padding-right: 0; }
+
+  &.no-padding { padding-left: 0; padding-right: 0; }
+  &.padding { padding-left: $c-side-margin; padding-right: $c-side-margin; }
+}
+
+///******************************************************
+///   ■ Grid & Cells & Cell
+///******************************************************
+
+.grid {
+  $gap-form-x: nth($grid-gap-form, 1);
+  $gap-form-y: nth($grid-gap-form, 2);
+  
+  display: flex; flex-flow: row wrap;
+  margin: 0 (-$grid-gap-half) (-$grid-gap) (-$grid-gap-half);
+  
+  &.fields {
+    margin-left: -$gap-form-x / 2; margin-right: -$gap-form-x / 2;
+    margin-bottom: 0;
+    &.no-bottom-gap { margin-bottom: -$gap-form-y; }
+
+    > .cell, > .field {
+      padding-left: $gap-form-x / 2; padding-right: $gap-form-x / 2;
+      margin-bottom: $gap-form-y; }
+  }
+}
+
+.cells {
+  display: flex; flex-flow: row wrap;
+  width: 100%;
+}
+
+@include responsive-content() using($affix) {
+  .cells, .fields {
+    &.columns#{$affix} > .cell,
+    &.columns#{$affix} > .field {
+      flex-grow: 1 !important; flex-basis: 0 !important; max-width: 100% !important;
+    }
+  }
+}
+
+.cell, .field {
+  width: 100%;
+  padding-left: $grid-gap-half; padding-right: $grid-gap-half;
+  margin-bottom: $grid-gap;
+}
+
+///******************************************************
+///   ■ Grid - Gap
+///******************************************************
+
+@include responsive-content() using($affix) {
+  .grid {
+    $cell-classes: '> .cell, > .field, > .cells > .cell, > .cells > .field';
+    
+    $n: 4;
+    @for $i from 0 through ($n * 3) {
+      $j: if($i % $n > 0, #{$i}\/#{$n}, $i / $n);
+      $len: if($i / $n > 0, $i / $n * 1rem, 0);
+      $len-half: $len / 2;
+      
+      &.g-#{$j}#{$affix} {
+        margin-left: -$len-half; margin-right: -$len-half;
+        margin-bottom: -$len;
+        
+        #{$cell-classes} {
+          padding-left: $len-half; padding-right: $len-half;
+          margin-bottom: $len;
+        }
+      }
+      &.gx-#{$j}#{$affix} {
+        margin-left: -$len-half; margin-right: -$len-half;
+  
+        #{$cell-classes} {
+          padding-left: $len-half; padding-right: $len-half;
+        }
+      }
+      &.gy-#{$j}#{$affix} {
+        margin-bottom: -$len;
+  
+        #{$cell-classes} {
+          margin-bottom: $len;
+        }
+      }
+    }
+    
+    // 기본 간격 (auto)
+    &.g-auto#{$affix} {
+      margin-left: -$grid-gap-half; margin-right: -$grid-gap-half;
+      margin-bottom: -$grid-gap;
+      #{$cell-classes} {
+        padding-left: $grid-gap-half; padding-right: $grid-gap-half;
+        margin-bottom: $grid-gap;
+      }
+    }
+    &.gx-auto#{$affix} {
+      margin-left: -$grid-gap-half; margin-right: -$grid-gap-half;
+      #{$cell-classes} {
+        padding-left: $grid-gap-half; padding-right: $grid-gap-half;
+      }
+    }
+    &.gy-auto#{$affix} {
+      margin-bottom: -$grid-gap;
+      #{$cell-classes} {
+        margin-bottom: $grid-gap;
+      }
+    }
+    
+    // 하단 간격 보이기 (이 클래스를 사용하지 않을 경우 하단 간격 제거
+    &.bottom-gap#{$affix} { margin-bottom: 0 !important; }
+  }
+}
+
+///******************************************************
+///   ■ Flex
+///******************************************************
+
+@include responsive-content() using($affix) {
+  // Align Items
+  @each $key, $value in (
+    'stretch': stretch,
+    'start': flex-start,
+    'center': center,
+    'end': flex-end,
+    'baseline': baseline
+  ) {
+    .items-#{$key}#{$affix} { justify-content: $value; }
+  }
+  
+  // Justify Content
+  @each $key, $value in (
+    'start': flex-start,
+    'center': center,
+    'end': flex-end,
+    'between': space-between,
+    'around': space-around
+  ) {
+    .justify-#{$key}#{$affix} { justify-content: $value; }
+  }
+  
+  // Order
+  .order-first#{$affix} { order: -1; }
+  .order-last#{$affix} { order: 25; }
+  @for $i from 0 through 24 {
+    .order-#{$i}#{$affix} { order: $i; }
+  }
+}
+
+///******************************************************
+///   ■ Display
+///******************************************************
+
+@include responsive-content() using ($affix) {
+  @each $item in (block, flex, inline, inline-block, inline-flex, table, table-row, table-cell) {
+    .#{$item}#{$affix} { display: $item !important; }
+  }
+  .hidden#{$affix} { display: none !important; }
+}
+
+// 특수 요소 - 작은화면 / 큰화면 적절한 경게를 나눠서 각 요소를 구분
+@include media-small() using ($affix) {
+  .hidden#{$affix} { display: none !important; }
+}
+@include media-big() using ($affix) {
+  .hidden#{$affix} { display: none !important; }
+}
+
+///******************************************************
+///   ■ Sizing (Width/Height & Max/Min-Width/Height) (Important)
+///******************************************************
+
+@include responsive-content() using($affix) {
+  
+  //----- Width & Height -----//
+  
+  .w#{$affix} { flex-grow: 1 !important; flex-basis: 0 !important; max-width: 100% !important; }
+  .h#{$affix} { flex-grow: 1 !important; flex-basis: 0 !important; max-height: 100% !important; }
+  
+  // Widths by Percent(%) Unit
+  @each $n in (1, 2, 3, 4, 5, 6, 10, 12, 24) {
+    @for $i from 1 through $n {
+      @if $n == 1 or $i < $n {
+        $n2: if($n == 1, $n, #{$i}\/#{$n});
+        
+        .w-#{$n2}#{$affix} {
+          flex: none !important;
+          width: percentage($i / $n) !important;
+        }
+      }
+    }
+  }
+  // Heights by Percent(%) Unit
+  @each $n in (1, 2, 3, 4, 5, 10, 20) {
+    @for $i from 1 through $n {
+      @if $n == 1 or $i < $n {
+        $n2: if($n == 1, $n, #{$i}\/#{$n});
+        
+        .h-#{$n2}#{$affix} {
+          flex: none !important;
+          height: percentage($i / $n) !important;
+        }
+      }
+    }
+  }
+  
+  // Size by Rem Unit
+  // 1/4 ~ 19/4 (1,2,3,4), 5 ~ 9, 10 ~ 20 (짝수)
+  $n: 4;
+  @for $i from 1 through ($n * 20) {
+    @if $i / $n < 5 or ($i % $n == 0 and ($i / $n < 10 or $i / $n % 2 == 0)) {
+      $j: if($i % $n > 0, #{$i}\/#{$n}, $i / $n);
+      $length: $i / $n * 1rem;
+  
+      .w-#{$j}r#{$affix} { width: $length !important; }
+      .h-#{$j}r#{$affix} { height: $length !important; }
+    }
+  }
+  
+  // Size by Pixel(px) Unit
+  // 1 ~ 5, 50 ~ 1000 (Step 50)
+  $n: 50;
+  @for $i from 1 through ($n * 20) {
+    @if $i <= 5 or $i % $n == 0 {
+      $length: $i + px;
+      
+      .w-#{$i}p#{$affix} { width: $length !important; }
+      .h-#{$i}p#{$affix} { height: $length !important; }
+    }
+  }
+  
+  // Special Sizes
+  .w-auto#{$affix} { flex: none !important; width: auto !important; max-width: 100% !important; }
+  .h-auto#{$affix} { flex: none !important; height: auto !important; max-height: 100% !important; }
+  
+  .w-screen#{$affix} { width: 100vw !important; }
+  .h-screen#{$affix} { height: 100vh !important; }
+  
+  //----- Max/Min Width/Height -----//
+  
+  // 100 ~ 2000 (Step 100)
+  @for $i from 1 through 20 {
+    $j: $i * 100;
+    .max-w-#{$j}#{$affix} { max-width: #{$j}px !important; }
+  }
+  
+  .min-w {
+    &-full { min-width: 100% !important; }
+  }
+  
+  .min-h {
+    &-full { min-height: 100% !important; }
+    &-screen { min-height: 100vh !important; }
+  }
+  
+}
+
+///******************************************************
+///   ■ Spacing (Margin & Padding) (Important)
+///******************************************************
+
+@include responsive-content() using($affix) {
+  // 1/4 ~ 19/4 (1,2,3,4), 5 ~ 9, 10 ~ 20 (짝수)
+  $n: 4;
+  @for $i from 0 through ($n * 20) {
+    @if $i / $n < 5 or ($i % $n == 0 and ($i / $n < 10 or $i / $n % 2 == 0)) {
+      $j: if($i % $n > 0, #{$i}\/#{$n}, $i / $n);
+      $length: if($i == 0, 0, $i / $n * 1rem);
+
+      // Margins & Paddings (ex: mr-3:l / py-1/4:m)
+      @each $prop, $abbr in (margin: m, padding: p) {
+        .#{$abbr}-#{$j}#{$affix} { #{$prop}: $length !important; }
+        .#{$abbr}t-#{$j}#{$affix}, .#{$abbr}y-#{$j}#{$affix} { #{$prop}-top: $length !important; }
+        .#{$abbr}r-#{$j}#{$affix}, .#{$abbr}x-#{$j}#{$affix} { #{$prop}-right: $length !important; }
+        .#{$abbr}b-#{$j}#{$affix}, .#{$abbr}y-#{$j}#{$affix} { #{$prop}-bottom: $length !important; }
+        .#{$abbr}l-#{$j}#{$affix}, .#{$abbr}x-#{$j}#{$affix} { #{$prop}-left: $length !important; }
+      }
+  
+      // Negative Margins (ex: -ml-2:m)
+      @each $prop, $abbr in (margin: -m) {
+        @if $length > 0 {
+          .#{$abbr}-#{$j}#{$affix} { #{$prop}: -$length !important; }
+          .#{$abbr}t-#{$j}#{$affix}, .#{$abbr}y-#{$j}#{$affix} { #{$prop}-top: -$length !important; }
+          .#{$abbr}r-#{$j}#{$affix}, .#{$abbr}x-#{$j}#{$affix} { #{$prop}-right: -$length !important; }
+          .#{$abbr}b-#{$j}#{$affix}, .#{$abbr}y-#{$j}#{$affix} { #{$prop}-bottom: -$length !important; }
+          .#{$abbr}l-#{$j}#{$affix}, .#{$abbr}x-#{$j}#{$affix} { #{$prop}-left: -$length !important; }
+        }
+      }
+    }
+  }
+  
+  .m-auto#{$affix} { margin: auto !important; }
+  .mt-auto#{$affix}, .my-auto#{$affix} { margin-top: auto !important; }
+  .mr-auto#{$affix}, .mx-auto#{$affix} { margin-right: auto !important; }
+  .mb-auto#{$affix}, .my-auto#{$affix} { margin-bottom: auto !important; }
+  .ml-auto#{$affix}, .mx-auto#{$affix} { margin-left: auto !important; }
+}
+
+///******************************************************
+///   ■ Border
+///******************************************************
+
+@include responsive-content() using($affix) {
+  // Border Color
+  @each $key, $value in $colors {
+    .b-#{$key}#{$affix} { border-color: $value; }
+  }
+  
+  // Border Style
+  @each $value in (solid, dashed, dotted, double, none) {
+    .b-#{$value}#{$affix} { border-style: $value; }
+  }
+  
+  // Border Width
+  @each $n in (1, 0, 2, 4, 8) {
+    $key: if($n == 1, '', '-' + $n);
+    $value: if($n == 0, 0, $n + px);
+    
+    .b#{$key}#{$affix} { border-width: $value; }
+    .bt#{$key}#{$affix}, .by#{$key}#{$affix} { border-top-width: $value; }
+    .br#{$key}#{$affix}, .bx#{$key}#{$affix} { border-right-width: $value; }
+    .bb#{$key}#{$affix}, .by#{$key}#{$affix} { border-bottom-width: $value; }
+    .bl#{$key}#{$affix}, .bx#{$key}#{$affix} { border-left-width: $value; }
+  }
+}

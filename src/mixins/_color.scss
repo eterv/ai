@@ -1,0 +1,78 @@
+@charset "utf-8";
+///
+/// Functions & Mixins - Color
+///
+
+///******************************************************
+///   ■ Blend Functions
+///******************************************************
+
+//
+//  Blend - Normal
+//
+@function blend-normal($color1, $color2) {
+  $opa1: opacity($color1);
+  $opa2: opacity($color2);
+  $r: red($color1) * $opa1 + red($color2) * $opa2 * (1 - $opa1);
+  $g: green($color1) * $opa1 + green($color2) * $opa2 * (1 - $opa1);
+  $b: blue($color1) * $opa1 + blue($color2) * $opa2 * (1 - $opa1);
+  @return rgb($r, $g, $b);
+}
+
+//
+//  Blend - Screen
+//
+@function blend-screen($color1, $color2) {
+  $r: blend-screen-color(red($color1), red($color2));
+  $g: blend-screen-color(green($color1), green($color2));
+  $b: blend-screen-color(blue($color1), blue($color2));
+  @return blend-normal(rgba($r, $g, $b, opacity($color1)), $color2);
+}
+@function blend-screen-color($color1, $color2) {
+  @return (255 - (((255 - $color1) * (255 - $color2)) / 256));
+}
+
+///******************************************************
+///   ■ Etcs
+///******************************************************
+
+/// Returns the brightness of color
+/// 100 is pure white, 0 is pure black
+@function brightness($color) {
+  $r: red($color);
+  $g: green($color);
+  $b: blue($color);
+  $number: round(sqrt($r * $r * .299 + $g * $g * .587 + $b * $b * .114)) / 255 * 100;
+  @return $number;
+}
+
+/// 밝은지 어두운지를 알려준다.
+@function is-bright($color) {
+  @return brightness($color) > 55;
+}
+
+/// 지정한 색과 대조를 이루는 텍스트 색을 반환한다.
+@function color-text-contrast($color) {
+  @if is-bright($color) {
+    @return $text-dark-color;
+  } @else {
+    @return $text-light-color;
+  }
+}
+
+/// 특수 색상을 반환한다.
+@function get-spe-color($name, $type: null) {
+  $c: $white;
+  @if $name == 'success' or $name == 'info' or $name == 'warning' or $name == 'danger' {
+    @if $type == 'bg' {
+      $c: map-get($special-colors-bg, $name);
+    } @else if $type == 'border' {
+      $c: map-get($special-colors-border, $name);
+    } @else if $type == 'text' {
+      $c: map-get($special-colors-text, $name);
+    } @else {
+      $c: map-get($colors, $name);
+    }
+  }
+  @return $c;
+}

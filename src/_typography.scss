@@ -1,0 +1,106 @@
+@charset "utf-8";
+///
+/// Typography (Font / Text)
+///
+
+///******************************************************
+///   ■ Fonts Definition
+///******************************************************
+
+//----- 나눔바른고딕 (3종 :: Light / Regular / Bold) -----//
+@include font-face('NBG', 200, 'Nanum/NanumBarunGothicUltraLight');
+@include font-face('NBG', 300, 'Nanum/NanumBarunGothicLight');
+@include font-face('NBG', 400, 'Nanum/NanumBarunGothic');
+@include font-face('NBG', 700, 'Nanum/NanumBarunGothicBold');
+
+//----- 나눔스퀘어 (3종 :: Light / Regular / Bold) -----//
+@include font-face('NSL', null, 'Nanum/NanumSquareL');
+@include font-face('NSR', null, 'Nanum/NanumSquareR');
+@include font-face('NSB', null, 'Nanum/NanumSquareB');
+
+//----- 고도체 (2종 :: Medium / Bold) -----//
+@include font-face('Godo', 400, 'GodoM');
+@include font-face('Godo', 700, 'GodoB');
+
+//----- Noto Sans (Korean) (7종 Thin / Light / DemiLight / Regular / Medium / Bold / Black) -----//
+@include font-face('NotoSans', 100, 'NotoKR/NotoSansKR-Thin');
+@include font-face('NotoSans', 200, 'NotoKR/NotoSansKR-Light');
+@include font-face('NotoSans', 300, 'NotoKR/NotoSansKR-DemiLight');
+@include font-face('NotoSans', 400, 'NotoKR/NotoSansKR-Regular');
+@include font-face('NotoSans', 500, 'NotoKR/NotoSansKR-Medium');
+@include font-face('NotoSans', 700, 'NotoKR/NotoSansKR-Bold');
+@include font-face('NotoSans', 900, 'NotoKR/NotoSansKR-Black');
+
+//----- Noto Serif (Korean) (7종 ExtraLight / Light / Regular / Medium / SemiBold / Bold / Black) -----//
+@include font-face('NotoSerif', 100, 'NotoKR/NotoSerifKR-ExtraLight');
+@include font-face('NotoSerif', 300, 'NotoKR/NotoSerifKR-Light');
+@include font-face('NotoSerif', 400, 'NotoKR/NotoSerifKR-Regular');
+@include font-face('NotoSerif', 500, 'NotoKR/NotoSerifKR-Medium');
+@include font-face('NotoSerif', 600, 'NotoKR/NotoSerifKR-SemiBold');
+@include font-face('NotoSerif', 700, 'NotoKR/NotoSerifKR-Bold');
+@include font-face('NotoSerif', 900, 'NotoKR/NotoSerifKR-Black');
+
+//----- Bahagia -----//
+@include font-face('Bahagia', 400, 'Bahagia');
+
+//----- Dancing Script (2종 Regular / Bold) -----//
+@include font-face('Dancing Script', 400, 'DancingScript-Regular', (truetype));
+@include font-face('Dancing Script', 700, 'DancingScript-Bold', (truetype));
+
+//----- Dynalight -----//
+@include font-face('Dynalight', 400, 'Dynalight-Regular', (truetype));
+
+///******************************************************
+///   ■ Font Size
+///******************************************************
+
+@include responsive-content() using($affix) {
+  @for $i from 1 through 5 {
+    .fs-#{$i}#{$affix} { font-size: $i + rem; }
+  }
+  @for $i from 5 through (16 * 3) {
+    $n: 16;
+    .fs-#{$i}\/#{$n}#{$affix} { font-size: $i / $n + rem; }
+  }
+}
+
+///******************************************************
+///   ■ Font Weight / Font Style / Text Style
+///******************************************************
+
+@each $name, $value in ('thin': 100, 'extralight': 200, 'light': 300,
+  'regular': 400, 'medium': 500, 'semibold': 600, 'bold': 700, 'extrabold': 800, 'black': 900) {
+  .font-#{$name} { font-weight: $value; }
+}
+
+.italic { font-style: italic; }
+.line-through { text-decoration: line-through; }
+.underline { text-decoration: underline; }
+
+// Text Transform
+.capitalize { text-transform: capitalize; }
+.lowercase { text-transform: lowercase; }
+.uppercase { text-transform: uppercase; }
+
+// White Space
+.whitespace-nowrap { white-space: nowrap; }
+.whitespace-pre { white-space: pre; }
+.whitespace-pre-line { white-space: pre-line; }
+.whitespace-pre-wrap { white-space: pre-wrap; }
+
+// Word Break
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.helptext { font-size: 7 / 8 * 1rem; color: #555; }
+.sr, .sr-only { display: none; }
+
+///******************************************************
+///   ■ Text Alignment
+///******************************************************
+
+@include responsive-content() using ($affix) {
+  .text-left#{$affix} { text-align: left; }
+  .text-center#{$affix} { text-align: center; }
+  .text-right#{$affix} { text-align: right; }
+  .text-justify#{$affix} { text-align: justify; }
+}

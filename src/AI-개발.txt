@@ -1,0 +1,83 @@
+
+[개발 룰]
+
+1. 간단명료하고 복잡하지 않게 정의한다.
+  1) 변수를 최대한 간단하게, 많이 사용하지 않는다.
+  2)
+
+- 개발자/디자이너가 직관적으로 이해할 수 있도록 한다.
+- 범용적인 스타일 보다, 디테일하게 작업하는 데 도움이 되는 부면으로 초점을 맞춘다.
+
+- ai-{소문자알파벳1~2자} 가 붙은 축약형 키워드는 대표적이고 핵심적인 요소를 지칭한다.
+  ai-b :: AI Button
+  ai-c :: AI Container
+  ai-f :: AI Form
+  ai-t :: AI Table
+
+- ai-{component} 목록
+  ai-checkbox
+  ai-input
+  ai-dropdown
+
+- CSS Reset 은 normalize.css 최신 버전을 적용한 후, 추가적으로 상황에 맞게 필요한 것만 Reset 한다.
+
+- Bootstrap, SemanticUI, TailwindCSS, Bulma 4가지 주요 CSS Framework 에서 좋은 부분을 사용한다.
+
+- CSS 속성 나열 순서의 규칙 '형식 그룹별 순서 & 큰 영향을 주는 순서'
+  0) Generated content
+  		content,
+  1) Position & Layout & Box-model
+  		position, z-index, left, right, top, bottom,
+  		float, clear,
+  		display, Flexbox-properties,
+  		width, height,
+  		margin, box-shadow, border, border-radius, padding,
+  2) Visibility & Cliping
+  		opacity, transform, overflow, visibility,
+  3) Background
+  		background,
+  4) Typography
+  		color,
+  		font-size, line-height,
+  		font-family, font-weight, font-style,
+  		text-align, text-decoration, text-overflow, text-shadow, text-transform,
+  		white-space, word-break,
+  		letter-spacing, word-spacing,
+  5) Animation
+  		animation, transition,
+  6) Etcs
+  		cursor,
+
+- margin, padding, border 은 top, right, bottom, left 의 시계방향으로 작성한다.
+
+
+[작업사항]
+
+--
+
+
+---------------------------------------------------------------------------------
+
+[브라우저 버그]
+
+[IE 버그]
+
+부모 요소에 tabindex 를 주고, 자식이 div, span 일 경우, 자신을 클릭하거나 하면 부모가 focus 를 잃는다. 하지만 자식이 ul, nav 등이라면 문제가 없다.
+-- AIDropdown 작업 중 알게됨.
+
+
+[크롬 (웨일)]
+
+// 드래그 방지
+user-select: none; -ms-user-select: none; -webkit-user-select: none;
+
+// 모바일 (안드로이드) 계열에서 탭할때 보여지는 회색 또는 파란 계열의 순간적인 배경색을 없앤다.
+// a 태그나 cursor 가 pointer 로 되어 있는 요소에 이 코드 필요.
+-webkit-tap-highlight-color: transparent;
+
+---------------------------------------------------------------------------------
+
+[참조사항]
+
+-> ImageMagick 툴을 사용하여 썸네일 만들기 (배경은 투명, 가로100개 세로3개 타일 형태, 여백없음)
+magick montage -background none -tile 100x3 -geometry +0+0 *.png _sprite.png

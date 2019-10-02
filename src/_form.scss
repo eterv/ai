@@ -1,0 +1,360 @@
+@charset "utf-8";
+///
+/// Form
+///
+
+///******************************************************
+///   ■ Form - Reset
+///******************************************************
+
+input, select, textarea { outline: none; transition: $transition; }
+input:focus, select:focus, textarea:focus { outline: none; }
+
+::-webkit-input-placeholder { color: $input-placeholder-color; }
+:-ms-input-placeholder { color: $input-placeholder-color !important; }
+::placeholder { color: $input-placeholder-color; }
+
+input::-ms-clear { display: none; }
+
+///******************************************************
+///   ■ Fields
+///******************************************************
+
+.fields {
+  font-size: $base-size-px;
+  
+  // Size
+  &.size-xs { font-size: $rem-xs; }
+  &.size-s { font-size: $rem-s; }
+  &.size-m { font-size: $rem-m; }
+  &.size-l { font-size: $rem-l; }
+  &.size-xl { font-size: $rem-xl; }
+  
+  &.size-xs, &.size-s {
+    .field > label { font-size: $em-m; }
+  }
+}
+
+@each $key, $value in (s: 2, m: 2.5, l: 3, xl: 3.5) {
+  .fields.h-#{$key}, .field.h-#{$key} {
+    .control.input > input,
+    .control select,
+    .ai-b {
+      height: $value + em;
+      @if ($key == 's') {
+        padding-top: 0; padding-bottom: 0;
+      }
+    }
+  }
+}
+
+///******************************************************
+///   ■ Fields
+///******************************************************
+
+@include responsive-content() using($affix) {
+  .fields.horizontal#{$affix} .field {
+    display: flex !important; flex-flow: wrap row; align-items: center;
+    
+    > label:not(.control) {
+      width: 15rem;
+      margin-right: 1rem;
+    }
+    
+    > .controls, > .control { flex: 1; }
+  }
+}
+
+///******************************************************
+///   ■ Field
+///******************************************************
+
+.field {
+  > label:not(.control) {
+    display: block;
+    margin-bottom: 0.25em;
+    color: $text-color;
+    font-size: em(round(0.95 * $base-size-px)); font-weight: $bold;
+  }
+  
+  > .control {
+  
+  }
+}
+
+.inline.field {
+  display: flex !important; flex-flow: wrap row; align-items: center;
+  
+  /* Label */
+  > label:not(.control) {
+    margin-right: 1.5rem;
+  }
+  
+  @include responsive-content() using($affix) {
+    &.center#{$affix} { justify-content: center; }
+  }
+}
+
+///******************************************************
+///   ■ Control Group
+///******************************************************
+
+.controls {
+  display: flex !important; flex-flow: wrap column; align-items: flex-start;
+}
+
+@include responsive-content() using($affix) {
+  .block#{$affix}.field .controls,
+  .block#{$affix}.controls {
+    flex-direction: column;
+  }
+  
+  .inline#{$affix}.field .controls,
+  .inline#{$affix}.controls {
+    flex-direction: row;
+    
+    > .checkbox:not(:last-child) { margin-right: 1.5rem; }
+  }
+}
+
+///******************************************************
+///   ■ Control (Common)
+///******************************************************
+
+.control {
+  // Size
+  &.size-xs { font-size: $rem-xs; }
+  &.size-s { font-size: $rem-s; }
+  &.size-m { font-size: $rem-m; }
+  &.size-l { font-size: $rem-l; }
+  &.size-xl { font-size: $rem-xl; }
+  
+  @each $key, $value in (s: 2, m: 2.5, l: 3, xl: 3.5) {
+    &.h-#{$key} {
+      &.input > input,
+      select,
+      .ai-b {
+        height: $value + em;
+        @if ($key == 's') {
+          padding-top: 0; padding-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+///******************************************************
+///   ■ Input / Textarea / Select Control (Common)
+///******************************************************
+
+.control.input > input,
+.control textarea,
+.control select,
+.control.dropdown {
+  width: 100%; height: 2.5em;
+  padding: $input-padding-y $input-padding-x;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  background-color: $bg-color;
+  color: $text-color;
+  font-size: 1em; line-height: 1;
+}
+
+.control.input > input:focus,
+.control textarea:focus,
+.control select:focus,
+.control.dropdown.focused {
+  border-color: $input-focus-border-color;
+}
+
+///******************************************************
+///   ■ Input Control
+///******************************************************
+
+.control.input > input {
+  
+  &::-ms-clear { height: 1.3em; color: rgba(0, 0, 0, 0.5); }
+}
+
+.control.input {
+  position: relative;
+  display: flex;
+  
+  > i {
+    position: absolute; top: 50%; margin-top: -0.5em; width: $icon-width;
+    color: #999;
+    text-align: center;
+    transition: $transition;
+  }
+  &.icon i.left { left: $border-width; }
+  &.icon i.right { right: $border-width; }
+  
+  &[class*="left icon"] > input,
+  &[class*="left icon"] > textarea { padding-left: $icon-width; }
+  &[class*="right icon"] > input,
+  &[class*="right icon"] > textarea { padding-right: $icon-width; }
+  
+  &.group :first-child:not(input) {
+    border-radius: $border-radius 0 0 $border-radius;
+  }
+  
+  &.group input:not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  
+  .ai-b {
+    margin: 0;
+  }
+  
+}
+
+///******************************************************
+///   ■ Textarea Control
+///******************************************************
+
+.control textarea {
+  height: auto;
+  resize: vertical;
+  line-height: 1.5;
+}
+.control textarea:not([rows]) {
+  min-height: 8rem; max-height: 24rem;
+}
+
+///******************************************************
+///   ■ Select Control
+///******************************************************
+
+.control select {
+  display: block;
+  -moz-appearance: none; -webkit-appearance: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 448 512'%3E%3Cpath fill='currentColor' d='M441.9 167.3l-19.8-19.8c-4.7-4.7-12.3-4.7-17 0L224 328.2 42.9 147.5c-4.7-4.7-12.3-4.7-17 0L6.1 167.3c-4.7 4.7-4.7 12.3 0 17l209.4 209.4c4.7 4.7 12.3 4.7 17 0l209.4-209.4c4.7-4.7 4.7-12.3 0-17z'%3E%3C/path%3E%3C/svg%3E");
+  background-position: right $input-padding-y top 50%;
+  background-size: 0.8em auto;
+  background-repeat: no-repeat;
+  
+  &::-ms-expand { display: none; }
+  &:focus::-ms-value { background: transparent; color: currentColor; }
+}
+
+///******************************************************
+///   ■ Checkbox Control
+///******************************************************
+
+// 체크박스
+.control.checkbox {
+  $check-h: $cb-size * 0.7;
+  $check-w: $check-h * 0.55;
+  
+  position: relative;
+  display: inline-block !important;
+  
+  input { position: absolute; width: 0; height: 0; }
+  > span {
+    position: relative;
+    display: flex; align-items: center;
+  
+    &::before {
+      content: "";
+      display: inline-block;
+      position: relative; width: $cb-size; height: $cb-size;
+      margin-right: 0.5rem; margin-top: 2px;
+      border: 1px solid $border-color;
+      transition-duration: $transition-duration;
+      cursor: pointer;
+    }
+    &::after {
+      content: ""; display: none;
+      position: absolute;
+      left: $cb-size / 2; top: 50%;
+      width: $check-w; height: $check-h;
+      margin-left: $check-w / -2; margin-top: -7px;
+      border: solid $black; border-width: 0 2px 2px 0;
+      transform: rotate(35deg);
+      transition-duration: $transition-duration;
+      cursor: pointer;
+    }
+    
+    &:hover::before {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    
+  }
+  
+  input:checked ~ span::after { display: block; }
+  
+  &:not(:last-child) { margin-bottom: .25rem; }
+}
+
+// 라디오 체크박스
+.control.checkbox.radio {
+  $check-w: $cb-size * 1 / 2;
+  
+  > span {
+    &::before {
+      border-radius: 10rem;
+    }
+    
+    &::after {
+      width: $check-w; height: $check-w;
+      margin-left: $check-w / -2; margin-top: -4px;
+      background-color: $black;
+      border: 0; border-radius: 10rem;
+      transform: none;
+    }
+  }
+}
+
+// 토글 스타일 체크박스
+.control.checkbox.toggle {
+  > span {
+
+    &::before {
+      width: 3.5rem; height: 1.5rem;
+      margin-top: 0.1rem; margin-right: 0.8rem;
+      background-color: rgba(0, 0, 0, .05);
+      border: 0; border-radius: 500rem;
+    }
+    &::after {
+      display: block;
+      left: -0.1rem; width: 1.5rem; height: 1.5rem;
+      margin-left: 0; margin-top: (1.5rem / -2) + 0.05rem;
+      background-color: #fafafa;
+      border: 1px solid $border-color; border-radius: 50%;
+      transform: none;
+    }
+  }
+
+  &:hover > span::before { background-color: rgba(0, 0, 0, .15); }
+
+  input:checked ~ span,
+  &.bool input[type=hidden][value="1"] ~ span {
+    &::before { background-color: $blue; }
+    &::after { left: 3.5rem - 1.5rem + 0.1rem; }
+  }
+  
+  &:not(:last-child) { margin-bottom: .75rem; }
+}
+
+///******************************************************
+///   ■ Error
+///******************************************************
+
+.error.field {
+  .control.input > input,
+  .control textarea,
+  .control select {
+    background-color: get-spe-color('danger', 'bg');
+    border-color: get-spe-color('danger', 'border');
+    color: get-spe-color('danger', 'text');
+  }
+  
+  .icon.input i { color: get-spe-color('danger', 'text'); }
+}
+
+.error.label {
+  background-color: $white;
+  border: 1px solid get-spe-color('danger', 'border');
+  color: get-spe-color('danger', 'text');
+}

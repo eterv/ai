@@ -1,0 +1,97 @@
+@charset "utf-8";
+///
+/// Functions & Mixins - Grid
+///
+
+@function bp-next($name, $bp: $breakpoints, $bp-names: map-keys($bp)) {
+  $n: index($bp-names, $name);
+  @return if($n != null and $n < length($bp-names), nth($bp-names, $n + 1), null);
+}
+
+@function bp-min($name, $bp: $breakpoints) {
+  $min: map-get($bp, $name);
+  @return if($min != 0, $min, null);
+}
+
+@function bp-max($name, $bp: $breakpoints) {
+  $next: bp-next($name, $bp);
+  @return if($next, bp-min($next, $bp) - .02, null);
+}
+
+@function bp-affix-dash($name, $bp: $breakpoints) {
+  @return if(bp-min($name, $bp) == null, "", "-#{$name}");
+}
+@function bp-affix-colon($name, $bp: $breakpoints) {
+  @return if(bp-min($name, $bp) == null, "", "\\:#{$name}");
+}
+
+
+@mixin media-bp-up($name, $bp: $breakpoints) {
+  $min: bp-min($name, $bp);
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin media-bp-down($name, $bp: $breakpoints) {
+  $max: bp-max($name, $bp);
+  @if $max {
+    @media (max-width: $max) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin media-bp-between($lower, $upper, $bp: $breakpoints) {
+  $min: bp-min($lower, $bp);
+  $max: bp-max($upper, $bp);
+
+  @if $min != null and $max != null {
+    @media (min-width: $min) and (max-width: $max) {
+      @content;
+    }
+  } @else if $max == null {
+    @include media-bp-up($lower, $bp) {
+      @content;
+    }
+  } @else if $min == null {
+    @include media-bp-down($upper, $bp) {
+      @content;
+    }
+  }
+}
+
+@mixin media-bp-only($name, $bp: $breakpoints) {
+  @include media-bp-between($name, $name, $bp) {
+    @content;
+  }
+}
+
+@mixin responsive-content($bp: $breakpoints) {
+  @each $name in map-keys($bp) {
+    $affix: bp-affix-colon($name, $bp);
+    
+    @include media-bp-up($name) {
+      @content($affix);
+    }
+  }
+}
+
+@mixin media-small() {
+  $affix: "\\:\\:small";
+  @media (max-width: $key-breakpoint - .02) {
+    @content($affix);
+  }
+}
+@mixin media-big() {
+  $affix: "\\:\\:big";
+  @media (min-width: $key-breakpoint) {
+    @content($affix);
+  }
+}

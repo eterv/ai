@@ -1,0 +1,159 @@
+@charset "utf-8";
+///
+/// Dropdown
+///
+
+///******************************************************
+///   ■ Dropdown
+///******************************************************
+
+.dropdown {
+  position: relative;
+  display: flex; align-items: center;
+  cursor: pointer;
+  user-select: none; -ms-user-select: none; -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  
+  &:focus { outline: none; }
+  &:active { outline: none; }
+  
+  > .text {
+    display: flex; align-items: center;
+  
+    i { margin-right: 0.5rem; }
+    .flag-icon { margin-top: 0.1rem; }
+  }
+  
+  .arrow-icon {
+    position: absolute; right: $input-padding-x; top: 50%;
+    margin-top: -0.4rem;
+    font-size: 0.8rem;
+  }
+  
+  .menu {
+    position: absolute; left: 0; top: 100%; z-index: 1;
+    display: none;
+	  margin-top: 1rem;
+	  padding: 0.35rem;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    background: white;
+    cursor: pointer;
+    
+    &.direction-up {
+      top: auto; bottom: 100%;
+    }
+	  
+    > .item {
+      position: relative;
+      display: flex; align-items: center;
+	    background-color: white;
+      padding: 0.6rem $input-padding-x;
+      line-height: 1em;
+      
+      &.on {
+        background-color: $white2;
+        font-weight: 700;
+      }
+      &:hover { background-color: $white3; }
+      
+      i ~ * { margin-left: 0.5rem; }
+      .flag-icon { margin-top: 0.1rem; }
+    }
+    
+    > .item .icon {  }
+	
+	  &.s-icon {
+		  &::before {
+			  content: "";
+			  position: absolute; top: -0.25rem; left: 1rem; z-index: -1;
+			  width: 0.5rem; height: 0.5rem;
+			  border: 1px solid $border-color;
+			  border-bottom-color: transparent; border-right-color: transparent;
+			  background: white;
+			  transform: rotate(45deg);
+		  }
+		
+		  &.right {
+			  left: auto; right: 0;
+			
+			  &::before { left: auto; right: 1rem; }
+		  }
+		
+		  > .item {
+			  padding: 0.5rem 0.6rem;
+			  
+			  &:hover { color: $primary-color; }
+		  }
+	  }
+  }
+  &.menu-on .menu {
+  
+  }
+}
+
+.control.dropdown {
+	padding: 1rem 2rem 1rem 1rem;
+	border: $border-width solid $border-color;
+	border-radius: $border-radius;
+	
+	&:focus,
+	&:active { background: white; }
+  
+  .placeholder { color: $input-placeholder-color; }
+  
+  .arrow-icon {
+    position: absolute; right: $input-padding-x; top: 50%;
+    margin-top: -0.3rem;
+  }
+  
+  input[type=text] {
+    width: 100%;
+    border: 0;
+  }
+  
+  .menu {
+	  right: 0;
+    max-height: 8 * 2.2rem;
+	  overflow-x: hidden; overflow-y: auto;
+	  margin: 0 (-$border-width);
+	  padding: 0;
+  }
+  
+  &.menu-on:not(.upside) {
+    border-bottom-color: white;
+    border-bottom-left-radius: 0; border-bottom-right-radius: 0;
+    
+    .menu {
+      border-top: 0;
+      border-top-left-radius: 0; border-top-right-radius: 0;
+    }
+  }
+  &.menu-on.upside {
+    border-top-color: white;
+    border-top-left-radius: 0; border-top-right-radius: 0;
+    
+    .menu {
+      border-bottom: 0;
+      border-bottom-left-radius: 0; border-bottom-right-radius: 0;
+    }
+  }
+  
+  &.menu-on .menu {
+    border-color: $input-focus-border-color;
+  }
+}
+
+.control.dropdown.search {
+  cursor: text;
+  
+  .placeholder { display: none; }
+}
+
+///******************************************************
+///   ■ Dropdown Control
+///******************************************************
+
+@include responsive-content() using($affix) {
+
+}
